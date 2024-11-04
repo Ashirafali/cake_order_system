@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'backend/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,10 +21,10 @@
             </div>
             <nav>
                 <ul>
-                    <li class="current"><a href="index.html">HOME</a></li>
-                    <li><a href="about.html">ABOUT US</a></li>
-                    <li><a href="cart.html">CART</a></li>
-                    <li><a href="account.html">ACCOUNT</a></li>
+                    <li class="current"><a href="index.php">HOME</a></li>
+                    <li><a href="about.php">ABOUT US</a></li>
+                    <li><a href="cart.php">CART</a></li>
+                    <li><a href="backend/login.php">LOGIN</a></li>
                 </ul>
             </nav>
         </div>

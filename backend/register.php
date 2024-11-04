@@ -3,13 +3,14 @@ session_start();
 include 'config.php';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>log-in ! welcome</title>
+    <title>sign-up ! register</title>
 </head>
 <style>
     body {
@@ -48,33 +49,45 @@ a {
 text-decoration: none;
 color: white;
 }
-
 </style>
 <body>
     <header>
         <div class="container">
-            <div id="log-in">
-                <h1> Log In </h1>
+                <h1>Fill Form Below </h1>
             </div>
-        </div>
     </header>
-    <section id="log-in">
         <div class="container">
-            <form action="/log-in" method="post">
-                <label for="User Name">User Name:</label>
-                <input type="text" id="User Name" name="User Name" required>
-            
+            <div id="text">
+            <form action="/Register" method="post">
+                <label for="fname">First Name </label>
+                <input type="text" id="name" name="First Name " required>
+
+                <label for="mname">Midal Name </label>
+                <input type="text" id="name" name="Midal Name " >
+
+                <label for="lname">Last Name </label>
+                <input type="text" id="name" name="Last Name " required>
+    
+                <label for="Nationality">Nationality </label>
+                <input type="text" id="nationality" name="Nationality " required>
+    
+                <label for="Email">Email </label>
+                <input type="text" id="email" name="Email " required>         
+        
+                
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
     
+                <label for="password">Confim Password:</label>
+                <input type="password" id="password" name="Confim Password" required>
+    
                 <button type="submit">Submit</button>
-                <button type="ForgetPassword">ResetPassword</button>
-                <button type="SignUp"><a href="register.php">SingUp</a></button>
-                <form action="backend/login.php" method="post"></form>
+               
+                <form action="Register.php" method="post"></form>
                 
             </form>
         </div>
-    </section>
+    </div>
+
 </body>
 </html>
-
