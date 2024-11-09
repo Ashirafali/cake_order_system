@@ -1,30 +1,34 @@
 <?php
 session_start();
-$url ="localhost";
-$user ="root";
-$password ="";
-$db = "cake_odering_db";
+include 'config.php';
 
-$connect= mysqli_connect($url,$user,$password,$db);
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cake_odering_db"; 
 
-if(isset($_POST['submit'])){
-    $user_name  = $_POST['user_name'];
-    $password = $_POST['password'];
-  
-    $sql = "SELECT * FROM users WHERE user_name = '$user_name'  AND password= '$password'";
-   
-    $result = mysqli_query($connect,$sql);
-
-    $user = mysqli_fetch_array($result,MYSQLI_ASSOC);
-
-
-    if (password_verify($password, $user['password'])) {
-        echo "Login fresh";
-    } 
-    else{
-        echo "umefeli";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['user_name']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);}
+$errors = array();
+    if (empty($username)) {
+        array_push($errors, "Username is required");
     }
-}
+    if (empty($password)) {
+        array_push($errors, "Password is required");
+    }
+
+    if (count($errors) == 0) {
+        $password = md5($password);
+        $query = "SELECT * FROM users WHERE user_name='$username' AND password='$password'";
+        $results = mysqli_query($conn, $query);}
+
+        if (mysqli_num_rows($results) == 1) {
+            $_SESSION['user_name'] = $username;
+            $_SESSION['success'] = "You are now logged in";}
+            
 ?>
 
 <!DOCTYPE html>
@@ -91,7 +95,7 @@ color: white;
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
 
-                <button type="submit" name="submit">Submit</button>
+                <button type="submit" name="submit" value="login">Submit</button>
                 <button type="button" onclick="window.location.href='reset_password.php'">Reset Password</button>
                 <button type="button" onclick="window.location.href='register.php'">Sign Up</button>
             </form>
