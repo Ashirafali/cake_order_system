@@ -1,6 +1,49 @@
 <?php
 session_start();
 include 'config.php';
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cake_odering_db"; 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstName = $_POST['first_name'];
+    $middleName = $_POST['middle_name'];
+    $lastName = $_POST['last_name'];
+    $nationality = $_POST['nationality'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
+    
+    $error =array();
+    if ($password !== $confirmPassword) {
+        array_push($error,"Passwords do not match");
+        exit;
+    }
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $stmt = $conn->prepare("INSERT INTO register (first_name, middle_name, last_name, nationality, email, password) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $firstName, $middleName, $lastName, $nationality, $email, $hashedPassword);
+
+    if ($stmt->execute()) {
+        echo "Registration data saved!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
 ?>
 
 
@@ -58,34 +101,30 @@ color: white;
     </header>
         <div class="container">
             <div id="text">
-            <form action="/Register" method="post">
-                <label for="fname">First Name </label>
-                <input type="text" id="name" name="First Name " required>
+            <form action="register.php" method="post">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" required>
 
-                <label for="mname">Midal Name </label>
-                <input type="text" id="name" name="Midal Name " >
+    <label for="middle_name">Middle Name</label>
+    <input type="text" id="middle_name" name="middle_name">
 
-                <label for="lname">Last Name </label>
-                <input type="text" id="name" name="Last Name " required>
-    
-                <label for="Nationality">Nationality </label>
-                <input type="text" id="nationality" name="Nationality " required>
-    
-                <label for="Email">Email </label>
-                <input type="text" id="email" name="Email " required>         
-        
-                
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-    
-                <label for="password">Confim Password:</label>
-                <input type="password" id="password" name="Confim Password" required>
-    
-                <button type="submit">Submit</button>
-               
-                <form action="Register.php" method="post"></form>
-                
-            </form>
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" required>
+
+    <label for="nationality">Nationality</label>
+    <input type="text" id="nationality" name="nationality" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirm_password">Confirm Password:</label>
+    <input type="password" id="confirm_password" name="confirm_password" required>
+
+    <button type="submit">Submit</button>
+</form>
         </div>
     </div>
 

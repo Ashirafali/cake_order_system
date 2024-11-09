@@ -1,6 +1,30 @@
 <?php
 session_start();
-include 'config.php';
+$url ="localhost";
+$user ="root";
+$password ="";
+$db = "cake_odering_db";
+
+$connect= mysqli_connect($url,$user,$password,$db);
+
+if(isset($_POST['submit'])){
+    $user_name  = $_POST['user_name'];
+    $password = $_POST['password'];
+  
+    $sql = "SELECT * FROM users WHERE user_name = '$user_name'  AND password= '$password'";
+   
+    $result = mysqli_query($connect,$sql);
+
+    $user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+
+    if (password_verify($password, $user['password'])) {
+        echo "Login fresh";
+    } 
+    else{
+        echo "umefeli";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,18 +84,16 @@ color: white;
     </header>
     <section id="log-in">
         <div class="container">
-            <form action="/log-in" method="post">
-                <label for="User Name">User Name:</label>
-                <input type="text" id="User Name" name="User Name" required>
-            
+            <form action="login.php" method="post">
+                <label for="user_name">User Name:</label>
+                <input type="text" id="user_name" name="user_name" required>
+
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
-    
-                <button type="submit">Submit</button>
-                <button type="ForgetPassword">ResetPassword</button>
-                <button type="SignUp"><a href="register.php">SingUp</a></button>
-                <form action="backend/login.php" method="post"></form>
-                
+
+                <button type="submit" name="submit">Submit</button>
+                <button type="button" onclick="window.location.href='reset_password.php'">Reset Password</button>
+                <button type="button" onclick="window.location.href='register.php'">Sign Up</button>
             </form>
         </div>
     </section>
