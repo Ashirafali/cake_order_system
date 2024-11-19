@@ -1,17 +1,16 @@
 <?php
-$url = "localhost";
-$database = "";
-$user = "root";
-$password = "";
+$url ="localhost";
+$user ="root";
+$password ="";
 
 
-    $connect= mysqli_connect($url,$database,$user,$password);
-    if($connect){
-        echo "Database Connected successfully";
-    }
-    else{
-        echo "Not Connected";
-    }
+    $connect= mysqli_connect($url,$user,$password);
+    // if($connect){
+    //     echo "Database Connected successfully";
+    // }
+    // else{
+    //     echo "Not Connected";
+    // }
 
 
 ?>

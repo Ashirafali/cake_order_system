@@ -15,6 +15,10 @@ body {
 }
 
 /* Header */
+/*h1, h3 {
+    text-align: center;
+    margin-top: 20px;
+}*/
 header {
     background-color: #d69456;
     color: white;

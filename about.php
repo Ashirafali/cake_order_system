@@ -27,7 +27,7 @@
         <div class="container">
             <article id="main-col">
                 <h1 class="page-title">about us</h1>
-                <p>EEvery single cake and biscuit we sell is hand-made and baked in small batches in our Cambridgeshire bakery. We do not use any mixes – everything is made from scratch using only natural ingredients. Our eggs are free range from local farms, our flour is milled in Essex and our vegetables are from the Fens. In season, our fruit is from local farmers and our lavender is from Norfolk. We take the provenance of our ingredients extremely seriously. Our wide range flows with the seasons – be it a light summer Lavender Cake or an autumn Bramley Apple and Cinnamon Cake. We also produce a delicious range of handmade biscuits.s</p>
+                <p>Every single cake and biscuit we sell is hand-made and baked in small batches in our Cambridgeshire bakery. We do not use any mixes – everything is made from scratch using only natural ingredients. Our eggs are free range from local farms, our flour is milled in Essex and our vegetables are from the Fens. In season, our fruit is from local farmers and our lavender is from Norfolk. We take the provenance of our ingredients extremely seriously. Our wide range flows with the seasons – be it a light summer Lavender Cake or an autumn Bramley Apple and Cinnamon Cake. We also produce a delicious range of handmade biscuits.s</p>
                 <p class="dark"> cake and biscuit we sell is hand-made and baked in small batches in our Cambridgeshire cake and biscuit we sell is hand-made and baked in small batches in our Cambridgeshire cake and biscuit we sell is hand-made and baked in small batches in our Cambridgeshire bakery. We do not use any mixes</p>
 
             </article>
