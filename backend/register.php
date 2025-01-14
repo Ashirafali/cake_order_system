@@ -5,128 +5,57 @@ include 'config.php';
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "cake_odering_db"; 
+$dbname = "cake_odering_db";
 
 // Create connection
+
+// Database connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("ERROR: Could not connect. " . $conn->connect_error);
+    header("../frontend/database_error.php");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = $_POST['first_name'];
-    $middleName = $_POST['middle_name'];
-    $lastName = $_POST['last_name'];
-    $nationality = $_POST['nationality'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
-    
-    $error =array();
-    if ($password !== $confirmPassword) {
-        array_push($error,"Passwords do not match");
-        exit;
-    }
+// Validate the inputs
+$firstname = isset($_POST['first_name']) ? $conn->real_escape_string($_POST['first_name']) : '';
+$middle_name = isset($_POST['middle_name']) ? $conn->real_escape_string($_POST['middle_name']) : '';
+$lastname = isset($_POST['last_name']) ? $conn->real_escape_string($_POST['last_name']) : '';
+$email = isset($_POST['user_name']) ? $conn->real_escape_string($_POST['user_name']) : '';
+$password = isset($_POST['password']) ? $conn->real_escape_string($_POST['password']) : '';
+$confirm_password = isset($_POST['confirm_password']) ? $conn->real_escape_string($_POST['confirm_password']) : '';
+$full_address = isset($_POST['full_address']) ? $conn->real_escape_string($_POST['full_address']) : '';
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+// Ina hakikisha required filled zimejazwa
+if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($confirm_password)) {
+    die("Error: Required fields are missing");
+}
 
-    $stmt = $conn->prepare("INSERT INTO register (first_name, middle_name, last_name, nationality, email, password) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $firstName, $middleName, $lastName, $nationality, $email, $hashedPassword);
+// Angalia kama password zina fanana
+if ($password !== $confirm_password) {
+    die("Error: Passwords do not match");
+}
 
+// Hash the password before storing it
+$hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+// Andaa query ya ku insert data kwenye table
+$sql = "INSERT INTO users (first_name, middle_name, last_name, user_name, password, full_address,role) 
+        VALUES (?, ?, ?, ?, ?, ?,'NORMAL_USER')";
+
+$stmt = $conn->prepare($sql);
+if ($stmt) {
+    $stmt->bind_param("ssssss", $firstname, $middle_name, $lastname, $email, $hashed_password, $full_address);
     if ($stmt->execute()) {
-        echo "Registration data saved!";
+        echo "User Created Successfully";
     } else {
         echo "Error: " . $stmt->error;
     }
-
     $stmt->close();
-    $conn->close();
+} else {
+    echo "Error: " . $conn->error;
 }
+$conn->close();
+
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sign-up ! register</title>
-</head>
-<style>
-    body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    margin: 50px;
-}
-
-.container {
-    max-width: 400px;
-    margin: auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: lightslategray;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-a {
-text-decoration: none;
-color: white;
-}
-</style>
-<body>
-    <header>
-        <div class="container">
-                <h1>Fill Form Below </h1>
-            </div>
-    </header>
-        <div class="container">
-            <div id="text">
-            <form action="register.php" method="post">
-    <label for="first_name">First Name</label>
-    <input type="text" id="first_name" name="first_name" required>
-
-    <label for="middle_name">Middle Name</label>
-    <input type="text" id="middle_name" name="middle_name">
-
-    <label for="last_name">Last Name</label>
-    <input type="text" id="last_name" name="last_name" required>
-
-    <label for="nationality">Nationality</label>
-    <input type="text" id="nationality" name="nationality" required>
-
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" id="confirm_password" name="confirm_password" required>
-
-    <button type="submit">Submit</button>
-</form>
-        </div>
-    </div>
-
-</body>
-</html>

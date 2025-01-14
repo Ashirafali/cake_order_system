@@ -157,10 +157,6 @@ include 'backend/config.php';
         });
     </script> 
 </body>
-<?php
-session start();
-include 'backend/config.php';
-?>
 </html>
 
 
