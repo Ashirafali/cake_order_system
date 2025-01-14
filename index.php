@@ -24,7 +24,7 @@ include 'backend/config.php';
                     <li class="current"><a href="index.php">HOME</a></li>
                     <li><a href="about.php">ABOUT US</a></li>
                     <li><a href="cart.php">CART</a></li>
-                    <li><a href="backend/login.php">LOGIN</a></li>
+                    <li><a href="./frontend/login.php">LOGIN</a></li>
                 </ul>
             </nav>
         </div>
